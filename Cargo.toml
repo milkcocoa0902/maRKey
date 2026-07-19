@@ -1,0 +1,21 @@
+[workspace]
+members = [
+    "apps/markey",
+    "crates/markey-core",
+    "crates/markey-platform",
+    "crates/markey-preview",
+    "crates/markey-terminal",
+]
+resolver = "3"
+
+[workspace.package]
+version = "0.1.0"
+edition = "2024"
+rust-version = "1.97.1"
+
+[workspace.dependencies]
+gpui = "0.2.2"
+markey-core = { path = "crates/markey-core" }
+markey-platform = { path = "crates/markey-platform" }
+markey-preview = { path = "crates/markey-preview" }
+markey-terminal = { path = "crates/markey-terminal" }

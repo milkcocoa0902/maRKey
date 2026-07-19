@@ -1,0 +1,22 @@
+[package]
+name = "markey-app"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+publish = false
+
+[[bin]]
+name = "markey"
+path = "src/main.rs"
+
+[features]
+default = ["preview", "terminal"]
+preview = ["dep:markey-preview"]
+terminal = ["dep:markey-terminal"]
+
+[dependencies]
+gpui.workspace = true
+markey-core.workspace = true
+markey-platform.workspace = true
+markey-preview = { workspace = true, optional = true }
+markey-terminal = { workspace = true, optional = true }

@@ -1,0 +1,9 @@
+[package]
+name = "markey-platform"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+publish = false
+
+[dependencies]
+markey-core.workspace = true
