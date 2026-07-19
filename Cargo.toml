@@ -5,6 +5,7 @@ members = [
     "crates/markey-platform",
     "crates/markey-preview",
     "crates/markey-terminal",
+    "xtask",
 ]
 resolver = "3"
 

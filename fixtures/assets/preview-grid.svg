@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="360" viewBox="0 0 640 360" role="img" aria-labelledby="title description">
+  <title id="title">maRKey preview grid fixture</title>
+  <desc id="description">A colored grid used to verify relative image loading and scaling.</desc>
+  <rect width="640" height="360" fill="#111827" />
+  <g stroke="#374151" stroke-width="1">
+    <path d="M0 60H640M0 120H640M0 180H640M0 240H640M0 300H640" />
+    <path d="M80 0V360M160 0V360M240 0V360M320 0V360M400 0V360M480 0V360M560 0V360" />
+  </g>
+  <rect x="80" y="60" width="160" height="120" rx="12" fill="#2563eb" />
+  <rect x="400" y="180" width="160" height="120" rx="12" fill="#10b981" />
+  <circle cx="320" cy="180" r="52" fill="#f59e0b" />
+  <text x="320" y="332" fill="#f9fafb" font-family="sans-serif" font-size="24" text-anchor="middle">maRKey relative asset</text>
+</svg>
