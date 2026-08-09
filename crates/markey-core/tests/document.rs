@@ -79,3 +79,46 @@ fn non_empty_document() {
     let doc = document::Document::new(document::DocumentId::new(document_id), source.to_string());
     assert!(!doc.is_empty());
 }
+
+// Offset test
+#[test]
+fn text_offset_keeps_positive_value() {
+    let raw_value = 10;
+    let text_offset = document::TextOffset::new(raw_value);
+
+    assert_eq!(raw_value, text_offset.value())
+}
+
+#[test]
+fn text_offset_must_be_comparable() {
+    let offset_1 = document::TextOffset::new(1);
+    let offset_2 = document::TextOffset::new(1);
+
+    assert_eq!(offset_1, offset_2)
+}
+
+#[test]
+fn text_range_preserved_boundaries() {
+    let start = document::TextOffset::new(1);
+    let end = document::TextOffset::new(5);
+
+    let range = document::TextRange::new(start, end);
+
+    assert_eq!(start, range.start());
+    assert_eq!(end, range.end());
+}
+
+#[test]
+fn text_edit_preserved_range_and_replacement() {
+    let start = document::TextOffset::new(1);
+    let end = document::TextOffset::new(4);
+
+    let range = document::TextRange::new(start, end);
+
+    let replacement = "replace with me";
+
+    let edit = document::TextEdit::new(range, replacement.to_string());
+
+    assert_eq!(range, edit.range());
+    assert_eq!(replacement, edit.replacement());
+}
