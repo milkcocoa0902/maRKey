@@ -1,5 +1,10 @@
-pub struct DocumentId(u64);
+mod edit;
+mod position;
 
+pub use edit::TextEdit;
+pub use position::{TextOffset, TextRange};
+
+pub struct DocumentId(u64);
 impl DocumentId {
     pub fn new(id: u64) -> Self {
         DocumentId(id)
@@ -15,56 +20,6 @@ pub struct Revision(u64);
 impl Revision {
     pub fn value(&self) -> u64 {
         self.0
-    }
-}
-
-#[derive(Clone, Copy, Debug, PartialEq, Eq)]
-pub struct TextOffset(usize);
-impl TextOffset {
-    pub fn new(offset: usize) -> Self {
-        TextOffset(offset)
-    }
-
-    pub fn value(&self) -> usize {
-        self.0
-    }
-}
-
-#[derive(Clone, Copy, Debug, PartialEq, Eq)]
-pub struct TextRange {
-    start: TextOffset,
-    end: TextOffset,
-}
-impl TextRange {
-    pub fn new(start: TextOffset, end: TextOffset) -> Self {
-        TextRange { start, end }
-    }
-
-    pub fn start(&self) -> TextOffset {
-        self.start
-    }
-
-    pub fn end(&self) -> TextOffset {
-        self.end
-    }
-}
-
-#[derive(Clone, Debug, PartialEq, Eq)]
-pub struct TextEdit {
-    range: TextRange,
-    replacement: String,
-}
-impl TextEdit {
-    pub fn new(range: TextRange, replacement: String) -> Self {
-        TextEdit { range, replacement }
-    }
-
-    pub fn range(&self) -> TextRange {
-        self.range
-    }
-
-    pub fn replacement(&self) -> &str {
-        &self.replacement
     }
 }
 
