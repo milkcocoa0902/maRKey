@@ -1,7 +1,9 @@
 mod edit;
+mod error;
 mod position;
 
 pub use edit::TextEdit;
+pub use error::DocumentError;
 pub use position::{TextOffset, TextRange};
 
 pub struct DocumentId(u64);
@@ -20,6 +22,9 @@ pub struct Revision(u64);
 impl Revision {
     pub fn value(&self) -> u64 {
         self.0
+    }
+    fn increment(&mut self) {
+        self.0 += 1
     }
 }
 
@@ -58,5 +63,14 @@ impl Document {
 
     pub fn is_empty(&self) -> bool {
         self.len_bytes() == 0
+    }
+
+    pub fn apply_edit(&mut self, edit: TextEdit) -> Result<(), DocumentError> {
+        let s = edit.range().start().value();
+        let e = edit.range().end().value();
+
+        self.source.replace_range(s..e, edit.replacement());
+        self.revision.increment();
+        Ok(())
     }
 }

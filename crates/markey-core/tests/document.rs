@@ -122,3 +122,21 @@ fn text_edit_preserved_range_and_replacement() {
     assert_eq!(range, edit.range());
     assert_eq!(replacement, edit.replacement());
 }
+
+#[test]
+fn text_edit_minimul_insert() {
+    let replacement = "X";
+    let original = "ab";
+
+    let mut document = document::Document::new(document::DocumentId::new(1), original.to_string());
+    let current_revision = document.revision().value();
+
+    let range =
+        document::TextRange::new(document::TextOffset::new(1), document::TextOffset::new(1));
+    let edit = document::TextEdit::new(range, replacement.to_string());
+
+    let result = document.apply_edit(edit);
+    assert!(result.is_ok());
+    assert_eq!(document.revision().value(), current_revision + 1);
+    assert_eq!(document.source(), "aXb");
+}
