@@ -140,3 +140,39 @@ fn text_edit_minimul_insert() {
     assert_eq!(document.revision().value(), current_revision + 1);
     assert_eq!(document.source(), "aXb");
 }
+
+#[test]
+fn text_edit_delete_by_empty_replacement() {
+    let replacement = "";
+    let original = "original";
+
+    let mut document = document::Document::new(document::DocumentId::new(1), original.to_string());
+    let current_revision = document.revision().value();
+
+    let range =
+        document::TextRange::new(document::TextOffset::new(0), document::TextOffset::new(3));
+    let edit = document::TextEdit::new(range, replacement.to_string());
+
+    let result = document.apply_edit(edit);
+    assert!(result.is_ok());
+    assert_eq!(document.revision().value(), current_revision + 1);
+    assert_eq!(document.source(), "ginal");
+}
+
+#[test]
+fn text_edit_replace_source() {
+    let replacement = "replace";
+    let original = "original";
+
+    let mut document = document::Document::new(document::DocumentId::new(1), original.to_string());
+    let current_revision = document.revision().value();
+
+    let range =
+        document::TextRange::new(document::TextOffset::new(0), document::TextOffset::new(8));
+    let edit = document::TextEdit::new(range, replacement.to_string());
+
+    let result = document.apply_edit(edit);
+    assert!(result.is_ok());
+    assert_eq!(document.revision().value(), current_revision + 1);
+    assert_eq!(document.source(), "replace");
+}
