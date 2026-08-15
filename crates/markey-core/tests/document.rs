@@ -176,3 +176,39 @@ fn text_edit_replace_source() {
     assert_eq!(document.revision().value(), current_revision + 1);
     assert_eq!(document.source(), "replace");
 }
+
+#[test]
+fn text_edit_japanese_charactor_replace() {
+    let replacement = "月";
+    let original = "a日b";
+
+    let mut document = document::Document::new(document::DocumentId::new(1), original.to_string());
+    let current_revision = document.revision().value();
+
+    let range =
+        document::TextRange::new(document::TextOffset::new(1), document::TextOffset::new(4));
+    let edit = document::TextEdit::new(range, replacement.to_string());
+
+    let result = document.apply_edit(edit);
+    assert!(result.is_ok());
+    assert_eq!(document.revision().value(), current_revision + 1);
+    assert_eq!(document.source(), "a月b");
+}
+
+#[test]
+fn text_edit_no_op() {
+    let replacement = "ori";
+    let original = "original";
+
+    let mut document = document::Document::new(document::DocumentId::new(1), original.to_string());
+    let current_revision = document.revision().value();
+
+    let range =
+        document::TextRange::new(document::TextOffset::new(0), document::TextOffset::new(3));
+    let edit = document::TextEdit::new(range, replacement.to_string());
+
+    let result = document.apply_edit(edit);
+    assert!(result.is_ok());
+    assert_eq!(document.revision().value(), current_revision);
+    assert_eq!(document.source(), original);
+}

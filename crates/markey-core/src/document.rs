@@ -69,6 +69,12 @@ impl Document {
         let s = edit.range().start().value();
         let e = edit.range().end().value();
 
+        if let Some(sub) = self.source.get(s..e)
+            && sub == edit.replacement()
+        {
+            return Ok(());
+        }
+
         self.source.replace_range(s..e, edit.replacement());
         self.revision.increment();
         Ok(())
